@@ -13,7 +13,7 @@ export default function App() {
     <ContainerProducts>
       {products.map((product) => {
         return (
-          <Products id = {product.id} imgUrl={product.imgUrl} name = {product.name} price={product.price} description={product.description} category={product.category}/>
+          <Products key={product.id} id = {product.id} imgUrl={product.imgUrl} name = {product.name} price={product.price} description={product.description} category={product.category}/>
         );
       })}
     </ContainerProducts>
