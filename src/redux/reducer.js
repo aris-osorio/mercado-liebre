@@ -1,4 +1,4 @@
-const INITAL_STATE = {
+const INITIAL_STATE = {
 
     products: [
         {
@@ -73,42 +73,53 @@ export const cartReducer = (previousState = INITIAL_STATE, action) => {
             let cart = [...previousState.cart];
             const product = previousState.products.find((e) => e.id === action.payload);
             const productCart = cart.find(
-                (product) => product.id === objectProduct.id
+                (item) => item.id === product.id
             );
 
             if(productCart){
                 let index = cart.items.findIndex(
-                    () => id === objectProduct.id
+                    (item) => item.id === product.id
                 );
-                items[index].count += 1;
+                cart.items[index].count += 1;
             }
             else
             {
                 cart.push(
                             {
                                 id: product.id,
-                                img: product.imgUrl,
+                                imgUrl: product.imgUrl,
                                 name: product.name,
                                 count: 1
                             }
                           );
             }
             cart.total += product.price
+            console.log("AGREGANDO PRODUCTO")
             return { ...previousState, cart: cart };
         }  
         case "DELETE_PRODUCT":{
             let cart = [...previousState.cart];
+            const product = previousState.products.find((e) => e.id === action.payload);
             let index = cart.items.findIndex(
-                () => id === objectProduct.id
+                (item) => item.id === action.payload
             );
-            items[index].count -= 1;
+            if(cart.items[index].count === 1){
+                cart.items.splice(index, 1)
+            }
+            else{
+                cart.items[index].count -= 1;
+            }
             cart.total -= product.price
+            console.log("ELIMINANDO PRODUCTO")
             return { ...previousState, cart: cart };
         }
         case "SHOW_CART":{
             let showCart = [...previousState.showCart];
             showCart = action.payload
-            return { ...previousState, cart: cart };
+            console.log("MOSTRAR CARRITO " + action.payload)
+            return { ...previousState, showCart: showCart };
         }
+        default:
+            return previousState;
     }    
 }

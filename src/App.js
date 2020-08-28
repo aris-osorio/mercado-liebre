@@ -1,26 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ContainerProducts from './components/containerProducts'
+import Products from './components/products'
+import store from "./redux/store";
 
-function App() {
+export default function App() {
+
+  const { cartReducer } = store.getState();
+  const products = cartReducer.products;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ContainerProducts>
+      {products.map((product) => {
+        return (
+          <Products id = {product.id} imgUrl={product.imgUrl} name = {product.name} price={product.price} description={product.description} category={product.category}/>
+        );
+      })}
+    </ContainerProducts>
   );
 }
 
-export default App;
+
